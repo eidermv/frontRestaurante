@@ -21,6 +21,38 @@ http://localhost:3000/menu/menus
 http://localhost:3000/menu/porId
  */
 
+  getMenus(idM: number) {
+    // console.log('categria usuario ---' + idU);
+    this.menus = [];
+
+    this.http.post(environment.apiUrl + '/menu/menus', {}).subscribe((data: any) => {
+        if (data.estado === 'Fallo') {
+          console.log(data.mensaje);
+        } else {
+          data.datos.forEach(c => {
+            this.menu = new Menu();
+            this.menu.id_menu = Number(c.Id);
+            this.menu.descripcion = c.Descripcion;
+            this.menu.id_sede = Number(c.Id_sede);
+            this.menus.push(this.menu);
+
+          });
+          // console.log('nombre menu ---- ' + this.menus.length);
+          return this.menus;
+
+        }
+      },
+      (err: HttpErrorResponse) => {
+        if (err.error instanceof Error) {
+          console.log('Client error', err);
+        } else {
+          console.log('Server error', err);
+        }
+      }
+    );
+    return this.menus;
+  }
+
   getMenu(idM: number) {
     // console.log('categria usuario ---' + idU);
     this.menus = [];
