@@ -21,7 +21,7 @@ http://localhost:3000/menu/menus
 http://localhost:3000/menu/porId
  */
 
-  getMenus(idM: number) {
+  getMenus() {
     // console.log('categria usuario ---' + idU);
     this.menus = [];
 

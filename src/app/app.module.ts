@@ -19,6 +19,13 @@ import {PlatoService} from './servicios/plato.service';
 import {HttpClientModule} from '@angular/common/http';
 import {MatInputModule} from '@angular/material/input';
 import {MyMatPaginatorInt} from './componentes/plato/listar-plato/my-mat-paginator-int';
+import {AtencionService} from './servicios/atencion.service';
+import {ClienteService} from './servicios/cliente.service';
+import {MenuService} from './servicios/menu.service';
+import {IngredienteService} from './servicios/ingrediente.service';
+import {MatButtonModule} from '@angular/material/button';
+import {ReactiveFormsModule} from '@angular/forms';
+import {MatIcon} from '@angular/material/icon';
 
 
 @NgModule({
@@ -28,7 +35,8 @@ import {MyMatPaginatorInt} from './componentes/plato/listar-plato/my-mat-paginat
     AgregarComponent,
     ListarAtencionComponent,
     ListarIngredienteComponent,
-    ListarPlatoComponent
+    ListarPlatoComponent,
+    MatIcon
   ],
   imports: [
     BrowserModule,
@@ -38,13 +46,19 @@ import {MyMatPaginatorInt} from './componentes/plato/listar-plato/my-mat-paginat
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
+    MatButtonModule,
     MatPaginatorModule,
     MatTableModule,
-    MatSelectModule
+    MatSelectModule,
+    ReactiveFormsModule
   ],
   providers: [
     SedeService,
     PlatoService,
+    AtencionService,
+    ClienteService,
+    MenuService,
+    IngredienteService,
     { provide: MatPaginatorIntl, useClass: MyMatPaginatorInt}
   ],
   bootstrap: [AppComponent]

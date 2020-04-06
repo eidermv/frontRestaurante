@@ -1,1 +1,76 @@
-<p>agregar works!</p>
+<div class="container">
+  <mat-card class="col-7 centrar-card">
+    <mat-card-title class="full-titulo">
+      <h2 class="centra">Agregar Atencion</h2>
+    </mat-card-title>
+    <mat-card-content>
+      <p class="full">
+        <button class="izq" mat-raised-button color="primary" (click)="volver()"><mat-icon>arrow_back</mat-icon></button>
+      </p>
+      <form (submit)="guardar()" [formGroup]="atencionForm">
+        <p>
+          <mat-form-field>
+            <mat-label>Sede</mat-label>
+            <mat-select formControlName="sede">
+              <mat-option *ngFor="let sed of sedes" [value]="sed.id_sede">
+                {{sed.direccion}} - {{sed.barrio}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="this.esValidoSede()">
+              Sede es <strong>requerida</strong>
+            </mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field>
+            <mat-label>Cliente</mat-label>
+            <mat-select formControlName="cliente">
+              <mat-option *ngFor="let cli of clientes" [value]="cli.id_cliente">
+                {{cli.nombre}} - {{cli.apellido}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="this.esValidoCliente()">
+              Cliente es <strong>requerido</strong>
+            </mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field>
+            <mat-label>Menu</mat-label>
+            <mat-select formControlName="menu">
+              <mat-option *ngFor="let men of menus" [value]="men.id_menu">
+                {{men.descripcion}}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="this.esValidoMenu()">
+              Menu es <strong>requerido</strong>
+            </mat-error>
+          </mat-form-field>
+        </p>
+        <p>
+          <mat-form-field>
+            <mat-label>Cantidad Pedido</mat-label>
+            <input type="number" matInput placeholder="Ej. 15" formControlName="cantidad_ped" required>
+            <mat-error *ngIf="this.esValidoCantidad()">
+              Cantidad es <strong>requerida</strong>
+            </mat-error>
+          </mat-form-field>
+        </p>
+
+        <p>
+          <mat-error *ngIf="this.esInvalidoForm">
+            Formulario es <strong>invalido</strong>
+          </mat-error>
+        </p>
+
+        <div class="alert alert-success" *ngIf="this.agregado">
+          <strong>Correcto!</strong> Atencion se agrego correctamente.
+        </div>
+
+        <p class="centrar-boton">
+          <button class="animacion centrar" type="submit" mat-raised-button color="primary"><mat-icon>save</mat-icon></button>
+        </p>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
