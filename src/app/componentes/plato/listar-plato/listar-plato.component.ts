@@ -40,6 +40,10 @@ export class ListarPlatoComponent implements OnInit {
     this.sedeService.getSedes();
 
     this.cargarSedes();
+
+    // console.log("carga sedes");
+
+    this.cargarPlatos(this.selected);
   }
 
   cargarPlatos(idS: string) {

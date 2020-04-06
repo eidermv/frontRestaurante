@@ -8,8 +8,8 @@
 <!--        <button class="izq" mat-raised-button color="primary" (click)="agregar()"><mat-icon>add_circle</mat-icon></button>-->
 <!--      </p>-->
       <mat-label>Sede</mat-label>
-      <mat-select [(value)]="selected" (click)="cargarPlatos(selected)">
-        <mat-option *ngFor="let sed of sedes" [value]="sed.id_sede">
+      <mat-select [(value)]="selected" (selectionChange)="cargarPlatos($event.value)">
+        <mat-option *ngFor="let sed of this.sedes" [value]="sed.id_sede">
           {{sed.direccion}} - {{sed.barrio}}
         </mat-option>
       </mat-select>
@@ -19,7 +19,7 @@
         <input matInput (keyup)="applyFilter($event)" placeholder="Ej. cuadernos">
       </mat-form-field>
       <!--      'total', 'plato', 'ubicacion' -->
-      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" (load)="cargarPlatos(this.selected)" >
 
         <ng-container matColumnDef="total">
           <th mat-header-cell *matHeaderCellDef> Total </th>
