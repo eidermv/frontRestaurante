@@ -9,6 +9,10 @@ import { AgregarComponent } from './componentes/atencion/agregar/agregar.compone
 import { ListarAtencionComponent } from './componentes/atencion/listar-atencion/listar-atencion.component';
 import { ListarIngredienteComponent } from './componentes/ingrediente/listar-ingrediente/listar-ingrediente.component';
 import { ListarPlatoComponent } from './componentes/plato/listar-plato/listar-plato.component';
+import {MatCardModule} from "@angular/material/card";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatTableModule} from "@angular/material/table";
 
 
 @NgModule({
@@ -23,7 +27,11 @@ import { ListarPlatoComponent } from './componentes/plato/listar-plato/listar-pl
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatPaginatorModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

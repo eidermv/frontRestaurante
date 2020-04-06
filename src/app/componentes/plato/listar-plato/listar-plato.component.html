@@ -1,1 +1,41 @@
-<p>listar-plato works!</p>
+<div class="container">
+  <mat-card>
+    <mat-card-title class="full-titulo">
+      <h3 class="centra">Platos Mas Vendidos</h3>
+    </mat-card-title>
+    <mat-card-content>
+<!--      <p class="full">-->
+<!--        <button class="izq" mat-raised-button color="primary" (click)="agregar()"><mat-icon>add_circle</mat-icon></button>-->
+<!--      </p>-->
+
+      <mat-form-field>
+        <mat-label>Filtro</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ej. cuadernos">
+      </mat-form-field>
+      <!--      'total', 'plato', 'ubicacion' -->
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="total">
+          <th mat-header-cell *matHeaderCellDef> Total </th>
+          <td mat-cell *matCellDef="let plato"> {{plato.total}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="plato">
+          <th mat-header-cell *matHeaderCellDef> Plato </th>
+          <td mat-cell *matCellDef="let plato"> {{plato.plato}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="ubicacion">
+          <th mat-header-cell *matHeaderCellDef> Ubicacion </th>
+          <td mat-cell *matCellDef="let plato"> {{plato.ubicacion}} </td>
+        </ng-container>
+
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    </mat-card-content>
+  </mat-card>
+</div>
