@@ -1,1 +1,47 @@
-<p>listar-ingrediente works!</p>
+<div class="container">
+  <mat-card>
+    <mat-card-title class="full-titulo">
+      <h3 class="centra">Stock De Ingredientes</h3>
+    </mat-card-title>
+    <mat-card-content>
+      <!--      <p class="full">-->
+      <!--        <button class="izq" mat-raised-button color="primary" (click)="agregar()"><mat-icon>add_circle</mat-icon></button>-->
+      <!--      </p>-->
+
+
+      <mat-form-field>
+        <mat-label>Filtro</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ej. pollo">
+      </mat-form-field>
+      <!--      'total', 'plato', 'ubicacion' -->
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" >
+
+        <ng-container matColumnDef="id_ingrediente">
+          <th mat-header-cell *matHeaderCellDef> Id. </th>
+          <td mat-cell *matCellDef="let ingrediente"> {{ingrediente.id_ingrediente}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="nombre">
+          <th mat-header-cell *matHeaderCellDef> Nombre </th>
+          <td mat-cell *matCellDef="let ingrediente"> {{ingrediente.nombre}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="cantidad">
+          <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+          <td mat-cell *matCellDef="let ingrediente"> {{ingrediente.cantidad}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="sede">
+          <th mat-header-cell *matHeaderCellDef> Sede </th>
+          <td mat-cell *matCellDef="let ingrediente"> {{ingrediente.sede.direccion}} - {{ingrediente.sede.barrio}} </td>
+        </ng-container>
+
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    </mat-card-content>
+  </mat-card>
+</div>
