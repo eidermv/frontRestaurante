@@ -1,0 +1,15 @@
+.menu{
+  width: 100%;
+  background-color: #1976d2;
+  color: #fafbfc;
+  display: flex;
+  justify-content: right;
+  justify-items: right;
+}
+
+.izq {
+  margin-right: 0%;
+  margin-left: auto;
+  display: inline-flex;
+  justify-self: right;
+}
