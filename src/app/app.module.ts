@@ -13,6 +13,11 @@ import {MatCardModule} from "@angular/material/card";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatTableModule} from "@angular/material/table";
+import {MatSelectModule} from "@angular/material/select";
+import {SedeService} from "./servicios/sede.service";
+import {PlatoService} from "./servicios/plato.service";
+import {HttpClientModule} from "@angular/common/http";
+import {MatInputModule} from "@angular/material/input";
 
 
 @NgModule({
@@ -26,14 +31,20 @@ import {MatTableModule} from "@angular/material/table";
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     MatCardModule,
     MatFormFieldModule,
+    MatInputModule,
     MatPaginatorModule,
-    MatTableModule
+    MatTableModule,
+    MatSelectModule
   ],
-  providers: [],
+  providers: [
+    SedeService,
+    PlatoService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
