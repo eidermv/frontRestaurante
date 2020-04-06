@@ -4,8 +4,8 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {Router} from '@angular/router';
 import {PlatoService} from '../../../servicios/plato.service';
-import {Sede} from "../../../modelos/sede";
-import {SedeService} from "../../../servicios/sede.service";
+import {Sede} from '../../../modelos/sede';
+import {SedeService} from '../../../servicios/sede.service';
 
 @Component({
   selector: 'app-listar-plato',

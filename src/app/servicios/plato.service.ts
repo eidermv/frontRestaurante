@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
-import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {Plato} from "../modelos/plato";
-import {environment} from "../../environments/environment";
+import {HttpClient, HttpErrorResponse} from '@angular/common/http';
+import {Plato} from '../modelos/plato';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlatoService {
 
-
-  private httpOpciones: any;
   private plato: Plato = new Plato();
   private platos: Plato[] = [];
 
