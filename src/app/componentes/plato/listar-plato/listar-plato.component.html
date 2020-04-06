@@ -7,6 +7,12 @@
 <!--      <p class="full">-->
 <!--        <button class="izq" mat-raised-button color="primary" (click)="agregar()"><mat-icon>add_circle</mat-icon></button>-->
 <!--      </p>-->
+      <mat-label>Sede</mat-label>
+      <mat-select [(value)]="selected" (click)="cargarPlatos(selected)">
+        <mat-option *ngFor="let sed of sedes" [value]="sed.id_sede">
+          {{sed.direccion}} - {{sed.barrio}}
+        </mat-option>
+      </mat-select>
 
       <mat-form-field>
         <mat-label>Filtro</mat-label>
