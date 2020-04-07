@@ -46,7 +46,10 @@ export class AgregarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.sedes = this.sedeService.getSedes();
+    this.sedeService.getSedes();
+    this.sedeService.mostrarSedes.subscribe(data => {
+      this.sedes = JSON.parse(JSON.stringify(data));
+    });
     this.clientes = this.clienteService.getClientes();
     this.menus = this.menuService.getMenus();
 
@@ -70,6 +73,10 @@ export class AgregarComponent implements OnInit {
 
   onResetForm() {
     this.atencionForm.reset();
+    this.atencionService.limpiarServicio();
+    this.sedeService.limpiarServicio();
+    this.clienteService.limpiarServicio();
+    this.menuService.limpiarServicio();
   }
 
   get sede() { return this.atencionForm.get('sede'); }

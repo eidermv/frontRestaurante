@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
@@ -10,7 +10,7 @@ import {AtencionService} from '../../../servicios/atencion.service';
   templateUrl: './listar-atencion.component.html',
   styleUrls: ['./listar-atencion.component.css']
 })
-export class ListarAtencionComponent implements OnInit {
+export class ListarAtencionComponent implements OnInit, OnDestroy {
 
   elementos: Atencion[] = [];
   selected = '1';
@@ -35,21 +35,33 @@ export class ListarAtencionComponent implements OnInit {
 
     this.atencionService.getAtenciones();
 
-    this.cargarAtenciones();
-
-  }
-
-  cargarAtenciones() {
-    setTimeout(() => {
-      this.elementos = this.atencionService.mostrarAtenciones();
-      // console.log('elementos ' + this.elementos);
-      this.dataSource = new MatTableDataSource(this.elementos);
+    this.atencionService.mostrarAtenciones.subscribe(data => {
+      // setTimeout(() => {
+      this.dataSource = new MatTableDataSource(data);
       // paginacion de la tabla
       this.dataSource.paginator = this.paginacion;
-    }, 500);
+      // }, 500);
+    });
+
+    // this.cargarAtenciones();
+
   }
+
+  // cargarAtenciones() {
+  //   setTimeout(() => {
+  //     this.elementos = this.atencionService.mostrarAtenciones();
+  //     // console.log('elementos ' + this.elementos);
+  //     this.dataSource = new MatTableDataSource(this.elementos);
+  //     // paginacion de la tabla
+  //     this.dataSource.paginator = this.paginacion;
+  //   }, 500);
+  // }
 
   agregar() {
     this.router.navigateByUrl('/agregar_atencion');
+  }
+
+  ngOnDestroy(): void {
+    this.atencionService.limpiarServicio();
   }
 }

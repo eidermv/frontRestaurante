@@ -6,6 +6,7 @@ import {Atencion} from '../modelos/atencion';
 import {SedeService} from "./sede.service";
 import {ClienteService} from "./cliente.service";
 import {MenuService} from "./menu.service";
+import {BehaviorSubject} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,10 @@ export class AtencionService {
 
   private atencion: Atencion = new Atencion();
   private atenciones: Atencion[] = [];
+
+  elementos: BehaviorSubject<Atencion[]> = new BehaviorSubject([]);
+  mostrarAtenciones = this.elementos.asObservable();
+
   resultado: boolean;
 
   constructor(
@@ -44,17 +49,20 @@ http://localhost:3000/atencion/agregar
             this.atencion = new Atencion();
             this.atencion.id_atencion = Number(aten.Id);
 
-            // carga la sede a a que pertenece una atencion
-            this.sedeService.getSede(Number(aten.Id_sede));
-            this.atencion.sede = Object.assign({}, this.sedeService.mostrarSede());
+            // sede
+            this.atencion.sede.id_sede = Number(aten.Sede.Id);
+            this.atencion.sede.direccion = aten.Sede.Direccion;
+            this.atencion.sede.barrio = aten.Sede.Barrio;
 
-            // carga el cliente a a que pertenece una atencion
-            this.clienteService.getCliente(Number(aten.Id_cliente));
-            this.atencion.cliente = Object.assign({}, this.clienteService.mostrarCliente());
+            // cliente
+            this.atencion.cliente.id_cliente = Number(aten.Cliente.Id);
+            this.atencion.cliente.nombre = aten.Cliente.Nombre;
+            this.atencion.cliente.apellido = aten.Cliente.Apellido;
 
-            // carga el menu a a que pertenece una atencion
-            this.menuService.getMenu(Number(aten.Id_menu));
-            this.atencion.menu = Object.assign({}, this.menuService.mostrarMenu());
+            // menu
+            this.atencion.menu.id_menu = Number(aten.Menu.Id);
+            this.atencion.menu.descripcion = aten.Menu.Descripcion;
+            this.atencion.menu.id_sede = aten.Menu.Id_sede;
 
             this.atencion.cantidad_ped = Number(aten.Cantidad);
 
@@ -75,6 +83,9 @@ http://localhost:3000/atencion/agregar
         } else {
           console.log('Server error', err);
         }
+      },
+      () => {
+        this.elementos.next(this.atenciones);
       }
     );
   }
@@ -109,11 +120,16 @@ http://localhost:3000/atencion/agregar
     return this.resultado;
   }
 
-  mostrarAtenciones(): Atencion[] {
-    return this.atenciones;
-  }
+  // mostrarAtenciones(): Atencion[] {
+  //   return this.atenciones;
+  // }
 
   mostrarAtencion(): Atencion {
     return this.atencion;
+  }
+
+  limpiarServicio() {
+    this.atencion = new Atencion();
+    this.atenciones = [];
   }
 }

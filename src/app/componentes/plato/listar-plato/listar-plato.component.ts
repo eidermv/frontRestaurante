@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Plato} from '../../../modelos/plato';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
@@ -12,7 +12,7 @@ import {SedeService} from '../../../servicios/sede.service';
   templateUrl: './listar-plato.component.html',
   styleUrls: ['./listar-plato.component.css']
 })
-export class ListarPlatoComponent implements OnInit {
+export class ListarPlatoComponent implements OnInit, OnDestroy {
 
   private sedes: Sede[];
   elementos: Plato[] = [];
@@ -36,32 +36,56 @@ export class ListarPlatoComponent implements OnInit {
   }
 
   ngOnInit() {
+    // this.sedeService.limpiarServicio();
+    // this.platoService.limpiarServicio();
 
     this.sedeService.getSedes();
 
     this.cargarSedes();
 
+    this.cargarPlatos(this.selected);
     // console.log("carga sedes");
 
-    this.cargarPlatos(this.selected);
+
+
+    this.platoService.mostrarPlatos.subscribe(data => {
+      // setTimeout(() => {
+      this.dataSource = new MatTableDataSource(data);
+      // paginacion de la tabla
+      this.dataSource.paginator = this.paginacion;
+      // }, 500);
+    });
+
+
   }
 
   cargarPlatos(idS: string) {
     this.platoService.getPlatos(Number(idS));
-    setTimeout(() => {
-      this.elementos = this.platoService.mostrarPlatos();
-      // console.log('elementos ' + this.elementos);
-      this.dataSource = new MatTableDataSource(this.elementos);
-      // paginacion de la tabla
-      this.dataSource.paginator = this.paginacion;
-    }, 500);
   }
 
-  cargarSedes() {
-    setTimeout(() => {
-      this.sedes = this.sedeService.getSedes();
-    }, 500);
+  // cargarPlatos(idS: string) {
+  //
+  //   setTimeout(() => {
+  //     this.elementos = this.platoService.mostrarPlatos();
+  //     // console.log('elementos ' + this.elementos);
+  //     this.dataSource = new MatTableDataSource(this.elementos);
+  //     // paginacion de la tabla
+  //     this.dataSource.paginator = this.paginacion;
+  //   }, 500);
+  // }
 
+  cargarSedes() {
+      this.sedeService.mostrarSedes.subscribe(data => {
+        // setTimeout(() => {
+        this.sedes = data;
+        // }, 500);
+      });
+
+  }
+
+  ngOnDestroy(): void {
+    this.platoService.limpiarServicio();
+    this.sedeService.limpiarServicio();
   }
 
 

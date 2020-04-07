@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {Sede} from '../modelos/sede';
+import {Atencion} from "../modelos/atencion";
+import {BehaviorSubject} from "rxjs";
+import {Plato} from "../modelos/plato";
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +13,9 @@ export class SedeService {
 
   private sede: Sede = new Sede();
   private sedes: Sede[] = [];
+
+  elementos: BehaviorSubject<Sede[]> = new BehaviorSubject([]);
+  mostrarSedes = this.elementos.asObservable();
 
   constructor(
     private http: HttpClient
@@ -20,7 +26,7 @@ export class SedeService {
 http://localhost:3000/sede/porId
    */
 
-  getSedes(): Sede[] {
+  getSedes() {
     this.sedes = [];
 
     this.http.post(environment.apiUrl + '/sede/sedes', {}).subscribe((data: any) => {
@@ -47,9 +53,12 @@ http://localhost:3000/sede/porId
         } else {
           console.log('Server error', err);
         }
+      },
+      () => {
+        this.elementos.next(this.sedes);
       }
     );
-    return this.sedes;
+    // return this.sedes;
   }
 
   getSede(idS: number) {
@@ -65,13 +74,15 @@ http://localhost:3000/sede/porId
           data.datos.forEach(c => {
             this.sede = new Sede();
             this.sede.id_sede = Number(c.Id);
+            // console.log('id obtenido de la nueva consulta a sede --->', c.Id);
             this.sede.direccion = c.Direccion;
             this.sede.barrio = c.Barrio;
             this.sedes.push(this.sede);
 
           });
           // console.log('nombre sede ---- ' + this.sedes.length);
-          return this.sedes;
+          // suscrip.unsubscribe();
+          // return this.sedes;
 
         }
       },
@@ -83,14 +94,19 @@ http://localhost:3000/sede/porId
         }
       }
     );
-    return this.sedes;
+    // return this.sedes;
   }
-
-  mostrarSedes(): Sede[] {
-    return this.sedes;
-  }
+  //
+  // mostrarSedes(): Sede[] {
+  //   return this.sedes;
+  // }
 
   mostrarSede(): Sede {
     return this.sede;
+  }
+
+  limpiarServicio() {
+    this.sede = new Sede();
+    this.sedes = [];
   }
 }

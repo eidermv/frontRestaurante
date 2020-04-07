@@ -3,6 +3,7 @@ import {environment} from '../../environments/environment';
 
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Menu} from '../modelos/menu';
+import {Atencion} from "../modelos/atencion";
 
 @Injectable({
   providedIn: 'root'
@@ -93,5 +94,10 @@ http://localhost:3000/menu/porId
 
   mostrarMenu(): Menu {
     return this.menu;
+  }
+
+  limpiarServicio() {
+    this.menu = new Menu();
+    this.menus = [];
   }
 }

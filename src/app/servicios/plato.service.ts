@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {Plato} from '../modelos/plato';
 import {environment} from '../../environments/environment';
+import {Atencion} from "../modelos/atencion";
+import {BehaviorSubject} from "rxjs";
+import {Ingrediente} from "../modelos/ingrediente";
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +13,9 @@ export class PlatoService {
 
   private plato: Plato = new Plato();
   private platos: Plato[] = [];
+
+  elementos: BehaviorSubject<Plato[]> = new BehaviorSubject([]);
+  mostrarPlatos = this.elementos.asObservable();
 
   resultado: boolean;
 
@@ -53,12 +59,19 @@ export class PlatoService {
         } else {
           console.log('Server error', err);
         }
+      },
+      () => {
+        this.elementos.next(this.platos);
       }
     );
   }
 
-  mostrarPlatos(): Plato[] {
-    return this.platos;
-  }
+  // mostrarPlatos(): Plato[] {
+  //   return this.platos;
+  // }
 
+  limpiarServicio() {
+    this.plato = new Plato();
+    this.platos = [];
+  }
 }

@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {Cliente} from '../modelos/cliente';
+import {Atencion} from "../modelos/atencion";
 
 @Injectable({
   providedIn: 'root'
@@ -94,5 +95,10 @@ http://localhost:3000/cliente/porId
 
   mostrarCliente(): Cliente {
     return this.cliente;
+  }
+
+  limpiarServicio() {
+    this.cliente = new Cliente();
+    this.clientes = [];
   }
 }

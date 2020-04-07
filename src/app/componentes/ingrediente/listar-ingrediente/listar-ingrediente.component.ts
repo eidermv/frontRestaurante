@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
@@ -12,9 +12,11 @@ import {IngredienteService} from '../../../servicios/ingrediente.service';
   templateUrl: './listar-ingrediente.component.html',
   styleUrls: ['./listar-ingrediente.component.css']
 })
-export class ListarIngredienteComponent implements OnInit {
+export class ListarIngredienteComponent implements OnInit, OnDestroy {
 
-  elementos: Ingrediente[] = [];
+  // elementos: Ingrediente[] = [];
+  // elementos: BehaviorSubject<Ingrediente[]> = new BehaviorSubject([]);
+
   selected = '1';
 // total, plato, ubicacion
   displayedColumns: string[] = ['id_ingrediente', 'nombre', 'cantidad', 'sede'];
@@ -31,24 +33,42 @@ export class ListarIngredienteComponent implements OnInit {
     private router: Router,
     private ingredienteService: IngredienteService
   ) {
+
   }
 
   ngOnInit() {
 
     this.ingredienteService.getIngredientes();
 
-    this.cargarIngredientes();
+    // this.changeData(this.ingredienteService.mostrarIngredientes());
+
+    this.ingredienteService.mostrarIngredientes.subscribe(data => {
+      // setTimeout(() => {
+        this.dataSource = new MatTableDataSource(data);
+        // paginacion de la tabla
+        this.dataSource.paginator = this.paginacion;
+      // }, 500);
+    });
+
+    // this.cargarIngredientes();
 
   }
 
-  cargarIngredientes() {
-    setTimeout(() => {
-      this.elementos = this.ingredienteService.mostrarIngredientes();
+  // changeData(data: any) {
+  //   this.elementos.next(data);
+  // }
+
+  // cargarIngredientes() {
+    // setTimeout(() => {
+
+
       // console.log('elementos ' + this.elementos);
-      this.dataSource = new MatTableDataSource(this.elementos);
-      // paginacion de la tabla
-      this.dataSource.paginator = this.paginacion;
-    }, 500);
+
+    // }, 500);
+ // }
+
+  ngOnDestroy(): void {
+    this.ingredienteService.limpiarServicio();
   }
 
 
